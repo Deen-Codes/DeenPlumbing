@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Deen Plumbing</title>
+<meta name="description" content="How Deen Plumbing collects and uses your personal information.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="images/logo-solid.png">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .legal { max-width:760px; margin:0 auto; padding:calc(var(--bar-h) + 50px) 24px 90px; }
+  .legal h1 { font-size:clamp(2rem,5vw,3rem); margin-bottom:.3em; }
+  .legal h2 { font-size:1.3rem; margin:1.6em 0 .4em; }
+  .legal p, .legal li { color:var(--ink-soft); }
+  .legal ul { padding-left:1.2em; }
+  .legal a { color:var(--amber-2); }
+  .legal .back { display:inline-block; margin-bottom:24px; font-weight:700; color:var(--amber-2); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="index.html" aria-label="Deen Plumbing — home">
+      <span class="brand__mark"><img src="images/logo.png" alt="Deen Plumbing"></span>
+      <span>
+        <span class="brand__name">Deen Plumbing</span>
+        <span class="brand__sub">Gas Safe · Reg 973458</span>
+      </span>
+    </a>
+    <div class="bar-actions">
+      <a class="btn btn--whatsapp btn--sm" href="https://wa.me/447346813714?text=Hi%20Deen%2C%20I%27d%20like%20a%20quote" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.18-2.85.9.9-2.78-.2-.32A8.2 8.2 0 1 1 12 20.2z"/><path d="M17.47 14.38c-.3-.15-1.74-.86-2-.96-.27-.1-.46-.15-.66.15-.2.3-.76.96-.93 1.15-.17.2-.34.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.64-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.34.44-.51.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.66-1.6-.9-2.18-.24-.56-.48-.49-.66-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.05 1.02-1.05 2.5 0 1.47 1.08 2.9 1.23 3.1.15.2 2.12 3.24 5.13 4.54.72.31 1.28.5 1.71.64.72.23 1.37.2 1.89.12.58-.09 1.74-.71 1.99-1.4.24-.69.24-1.28.17-1.4-.07-.12-.27-.2-.57-.35z"/></svg> WhatsApp</a>
+      <a class="btn btn--amber btn--sm" href="tel:+447346813714">📞 Call Us Now</a>
+    </div>
+  </div>
+</header>
+
+<main class="legal">
+  <a class="back" href="index.html">← Back to site</a>
+  <h1>Privacy Policy</h1>
+  <p>Last updated: <span id="updated"></span></p>
+  <p>This policy explains how Deen Plumbing ("we", "I") collects and uses your personal information. We keep things simple and only collect what we need to do the job.</p>
+
+  <h2>What we collect</h2>
+  <p>When you contact us by phone, email, or the request-a-job form, we may collect your name, phone number, email address, postcode/address, and details of the work you need.</p>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To respond to your enquiry and arrange or carry out work.</li>
+    <li>To provide quotes, invoices, and any certificates (e.g. gas safety records).</li>
+    <li>To keep records we're legally required to hold.</li>
+  </ul>
+
+  <h2>Sharing</h2>
+  <p>We don't sell your data. We only share information where necessary to complete work or where required by law (for example, gas safety records).</p>
+
+  <h2>How long we keep it</h2>
+  <p>We keep job and safety records for as long as required by law and good practice, then delete them securely.</p>
+
+  <h2>Your rights</h2>
+  <p>You can ask to see the information we hold about you, ask us to correct it, or ask us to delete it where we're not legally required to keep it. To make a request, just get in touch.</p>
+
+  <h2>Contact</h2>
+  <p>Email <a href="mailto:deen@deenplumbing.co.uk">deen@deenplumbing.co.uk</a> or call <a href="tel:+447346813714">07346 813714</a>.</p>
+  <p class="form__note">Note: this is a general template, not legal advice. Have it reviewed before going live to make sure it fits how you actually handle data.</p>
+</main>
+
+<footer class="footer">
+  <div class="container footer__bottom">
+    <span>© <span id="year"></span> Deen Plumbing. All rights reserved.</span>
+    <span>Gas Safe Registered · Fully Insured</span>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('updated').textContent = new Date().toLocaleDateString('en-GB', { year:'numeric', month:'long' });
+</script>
+</body>
+</html>
