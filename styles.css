@@ -159,16 +159,18 @@ a { color:inherit; text-decoration:none; }
 /* Section height is set by JS so vertical scroll distance == horizontal travel. */
 .hscroll { position:relative; min-height:100vh; background:var(--light); }
 .hscroll__sticky { position:sticky; top:0; height:100vh; overflow:hidden; display:flex; flex-direction:column; justify-content:center; }
-.hscroll__head { max-width:var(--maxw); width:100%; margin:0 auto 30px; padding:0 24px; }
-.hscroll__head h2 { color:var(--ink-dark); margin:0; }
-.hscroll__track { display:flex; align-items:flex-start; gap:24px; will-change:transform;
-  padding-left:max(24px,calc((100vw - var(--maxw)) / 2 + 24px)); padding-right:10vw; }
+.hscroll__head { max-width:var(--maxw); width:100%; margin:0 auto 34px; padding:0 24px; }
+.hscroll__head h2 { color:var(--ink-dark); margin:0; font-size:clamp(2.4rem,6vw,4.6rem); }
+/* First card starts off the right edge (so the heading leads), then cards stream in. */
+.hscroll__track { display:flex; align-items:center; gap:24px; will-change:transform;
+  padding-left:100vw; padding-right:40vw; }
 /* Full-bleed image with text overlaid on a gradient scrim */
 .job { position:relative; flex:0 0 380px; aspect-ratio:3 / 2; border-radius:18px; overflow:hidden;
-  box-shadow:0 16px 40px rgba(20,30,45,.20); transition:transform .4s var(--ease), box-shadow .4s var(--ease); }
+  box-shadow:0 16px 40px rgba(20,30,45,.20); transform-origin:center center; will-change:transform, opacity;
+  transition:box-shadow .4s var(--ease); }
 .job::after { content:""; position:absolute; inset:0; border-radius:18px; pointer-events:none;
   box-shadow:inset 0 0 0 0 rgba(255,158,61,0); transition:box-shadow .4s var(--ease); }
-.job:hover { transform:translateY(-6px); box-shadow:0 26px 56px rgba(20,30,45,.32); }
+.job:hover { box-shadow:0 26px 56px rgba(20,30,45,.32); }
 .job:hover::after { box-shadow:inset 0 0 0 2px rgba(255,158,61,.65); }
 .job__img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block;
   transition:transform .7s var(--ease); }
