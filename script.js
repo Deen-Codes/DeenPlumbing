@@ -32,9 +32,7 @@ function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
   function layoutPortfolio() {
     if (!hsec || !htrack || !hsticky || hsec.classList.contains('no-pin')) return;
     htrack.style.transform = 'none';
-    var last = jobs[jobs.length - 1];
-    // scroll just far enough for the last card to reach screen centre
-    hMaxX = last ? Math.max(0, last.offsetLeft + last.offsetWidth / 2 - window.innerWidth / 2) : 0;
+    hMaxX = Math.max(0, htrack.scrollWidth - hsticky.clientWidth);
     hsec.style.height = (window.innerHeight + hMaxX) + 'px';
   }
 
@@ -61,22 +59,6 @@ function clamp(v, a, b) { return Math.min(b, Math.max(a, v)); }
     if (hsec && htrack && hsticky && !hsec.classList.contains('no-pin') && hMaxX > 0) {
       var p = clamp((sy - hsec.offsetTop) / hMaxX, 0, 1);
       htrack.style.transform = 'translateX(' + (-p * hMaxX).toFixed(1) + 'px)';
-      // Spotlight: the card nearest screen centre swells, eases back as it moves away
-      var vc = window.innerWidth / 2;
-      var range = window.innerWidth * 0.55;
-      var ms = window.innerWidth <= 760 ? 0.12 : 0.20;
-      var foc = [];
-      for (var i = 0; i < jobs.length; i++) {
-        var r = jobs[i].getBoundingClientRect();
-        foc.push(clamp(1 - Math.abs((r.left + r.width / 2) - vc) / range, 0, 1));
-      }
-      for (i = 0; i < jobs.length; i++) {
-        jobs[i].style.transform = 'scale(' + (1 + ms * foc[i]).toFixed(3) + ')';
-        jobs[i].style.opacity = (0.55 + 0.45 * foc[i]).toFixed(3);
-        jobs[i].style.zIndex = Math.round(foc[i] * 10);
-      }
-    } else if (jobs.length && hsec && hsec.classList.contains('no-pin')) {
-      for (var k = 0; k < jobs.length; k++) { jobs[k].style.transform = ''; jobs[k].style.opacity = ''; jobs[k].style.zIndex = ''; }
     }
   }
   function relayout() { layoutPortfolio(); run(); }
