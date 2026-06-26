@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Deen Academy">
+<meta name="theme-color" content="#0a0e16">
+<title>Deen Plumbing Academy</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="googlebot" content="noindex,nofollow">
+<style>
+  :root{
+    --bg:#0a0e16; --bg2:#0e1420; --card:#141c2b; --card2:#1a2435;
+    --line:rgba(255,255,255,.10); --line2:rgba(255,255,255,.16);
+    --ink:#eaf0f8; --soft:#9fb0c4; --mut:#6f8197;
+    --amber:#ff9e3d; --amber2:#ffb968; --blue:#3b9ad6; --green:#37c98a; --red:#ff6b6b;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:radial-gradient(1000px 600px at 80% -10%,rgba(59,154,214,.12),transparent 60%),
+    radial-gradient(800px 500px at 0% 0%,rgba(255,158,61,.10),transparent 55%),var(--bg);
+    color:var(--ink); -webkit-font-smoothing:antialiased; padding-bottom:env(safe-area-inset-bottom);}
+  a{color:inherit}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px}
+  /* Header */
+  header{position:sticky;top:0;z-index:30;backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+    background:rgba(10,14,22,.72);border-bottom:1px solid var(--line);
+    padding:calc(env(safe-area-inset-top) + 12px) 0 12px;}
+  .hbar{display:flex;align-items:center;gap:12px}
+  .logo{width:40px;height:40px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--amber),#e07b1e);color:#1a1206;font-weight:900;font-size:1.25rem;box-shadow:0 6px 20px rgba(255,158,61,.35)}
+  .htitle{font-weight:800;font-size:1.05rem;letter-spacing:.2px;line-height:1.1}
+  .hsub{font-size:.72rem;color:var(--soft);letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
+  .back{margin-left:auto;background:var(--card);border:1px solid var(--line2);color:var(--ink);border-radius:10px;
+    padding:8px 14px;font-size:.85rem;font-weight:600;cursor:pointer;display:none}
+  /* Hero progress */
+  .hero{display:flex;align-items:center;gap:18px;margin:18px 0 6px;background:linear-gradient(180deg,var(--card),var(--bg2));
+    border:1px solid var(--line);border-radius:18px;padding:18px}
+  .ring{--p:0;width:74px;height:74px;flex:none;border-radius:50%;
+    background:conic-gradient(var(--amber) calc(var(--p)*1%),rgba(255,255,255,.08) 0);
+    display:flex;align-items:center;justify-content:center}
+  .ring::before{content:"";position:absolute}
+  .ring i{width:58px;height:58px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;
+    font-style:normal;font-weight:800;font-size:1.05rem}
+  .hero h1{margin:0 0 3px;font-size:1.12rem}
+  .hero p{margin:0;color:var(--soft);font-size:.86rem;line-height:1.45}
+  /* Section label */
+  .lab{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:800;margin:24px 4px 12px}
+  /* Module cards */
+  .mod{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:15px 16px;margin-bottom:11px;cursor:pointer;transition:.18s var(--ease);text-align:left;width:100%;color:inherit;font:inherit}
+  .mod:hover{border-color:var(--line2);transform:translateY(-1px)}
+  .mod .ic{width:46px;height:46px;flex:none;border-radius:12px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+  .mod .mt{flex:1;min-width:0}
+  .mod .mt h3{margin:0 0 5px;font-size:1rem}
+  .mbar{height:6px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+  .mbar i{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--blue));border-radius:99px;transition:width .4s var(--ease)}
+  .mod .pct{font-size:.72rem;color:var(--soft);margin-top:6px;display:block}
+  .mod .chev{color:var(--mut);font-size:1.3rem;flex:none}
+  .done-badge{color:var(--green);font-size:.72rem;font-weight:700}
+  /* Detail */
+  #detail{display:none}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+  .panel h2{margin:0 0 4px;font-size:1.15rem}
+  .panel .ph{color:var(--soft);font-size:.88rem;margin:0 0 12px;line-height:1.5}
+  .keys{list-style:none;padding:0;margin:0}
+  .keys li{position:relative;padding:9px 0 9px 26px;border-top:1px solid var(--line);font-size:.92rem;line-height:1.5;color:var(--ink)}
+  .keys li:first-child{border-top:0}
+  .keys li::before{content:"✓";position:absolute;left:0;top:9px;color:var(--amber);font-weight:800}
+  .keys li b{color:#fff}
+  /* Lessons */
+  .lesson{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+  .lesson:first-child{border-top:0}
+  .check{width:26px;height:26px;flex:none;border-radius:8px;border:2px solid var(--line2);background:transparent;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:#0a0e16;font-weight:900;font-size:.95rem;transition:.15s}
+  .check.on{background:var(--green);border-color:var(--green)}
+  .linfo{flex:1;min-width:0}
+  .linfo h4{margin:0 0 3px;font-size:.94rem;line-height:1.3}
+  .linfo span{font-size:.76rem;color:var(--mut)}
+  .watch{flex:none;background:var(--amber);color:#1a1206;border:0;border-radius:10px;padding:9px 14px;font-weight:700;font-size:.82rem;
+    text-decoration:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+  .watch:active{transform:scale(.97)}
+  /* Quiz */
+  .quizbtn{width:100%;background:linear-gradient(150deg,var(--blue),#2c7fb5);color:#fff;border:0;border-radius:14px;
+    padding:15px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px}
+  .q{margin:0 0 18px}
+  .q .qn{font-size:.74rem;color:var(--amber);font-weight:800;letter-spacing:.1em}
+  .q h4{margin:5px 0 12px;font-size:1.02rem;line-height:1.4}
+  .opt{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid var(--line2);color:var(--ink);
+    border-radius:12px;padding:13px 14px;margin-bottom:9px;font:inherit;font-size:.92rem;cursor:pointer;transition:.12s}
+  .opt:hover{border-color:var(--soft)}
+  .opt.correct{background:rgba(55,201,138,.16);border-color:var(--green)}
+  .opt.wrong{background:rgba(255,107,107,.14);border-color:var(--red)}
+  .opt:disabled{cursor:default}
+  .explain{font-size:.85rem;color:var(--soft);background:var(--bg2);border-left:3px solid var(--amber);
+    padding:10px 12px;border-radius:8px;margin-top:4px;line-height:1.5;display:none}
+  .explain.show{display:block}
+  .result{text-align:center;padding:10px 0 4px}
+  .result .big{font-size:2.6rem;font-weight:900;color:var(--amber)}
+  .result p{color:var(--soft);margin:6px 0 16px}
+  .note{font-size:.8rem;color:var(--mut);text-align:center;line-height:1.5;margin:18px 4px 30px}
+  .tip{background:rgba(59,154,214,.10);border:1px solid rgba(59,154,214,.3);border-radius:12px;padding:12px 14px;
+    font-size:.84rem;color:var(--soft);line-height:1.5;margin:14px 0}
+  .tip b{color:var(--blue)}
+  .btn2{background:var(--card);border:1px solid var(--line2);color:var(--ink);border-radius:12px;padding:12px;
+    font-weight:600;cursor:pointer;width:100%;font-size:.92rem;margin-top:6px}
+  footer{text-align:center;color:var(--mut);font-size:.74rem;padding:10px 0 26px}
+  /* PIN gate */
+  #gate{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(800px 500px at 50% -10%,rgba(255,158,61,.12),transparent 60%),var(--bg);
+    padding:24px}
+  .gatebox{width:100%;max-width:320px;text-align:center;background:var(--card);border:1px solid var(--line);
+    border-radius:20px;padding:30px 24px}
+  .gatebox .glogo{width:54px;height:54px;border-radius:15px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg,var(--amber),#e07b1e);color:#1a1206;font-weight:900;font-size:1.6rem;box-shadow:0 8px 24px rgba(255,158,61,.4)}
+  .gatebox h2{margin:0 0 4px;font-size:1.15rem}
+  .gatebox p{margin:0 0 18px;color:var(--soft);font-size:.86rem}
+  #pin{width:100%;text-align:center;font-size:1.6rem;letter-spacing:.5em;padding:14px;border-radius:12px;
+    border:1px solid var(--line2);background:var(--bg2);color:var(--ink);margin-bottom:12px;outline:none}
+  #pin:focus{border-color:var(--amber)}
+  #pinGo{width:100%;background:var(--amber);color:#1a1206;border:0;border-radius:12px;padding:14px;font-weight:800;font-size:1rem;cursor:pointer}
+  #pinErr{color:var(--red);font-size:.82rem;min-height:18px;margin-top:10px}
+</style>
+</head>
+<body>
+<div id="gate">
+  <div class="gatebox">
+    <div class="glogo">D</div>
+    <h2>Deen Plumbing Academy</h2>
+    <p>Enter your code to continue</p>
+    <input id="pin" type="tel" inputmode="numeric" maxlength="4" placeholder="••••" autocomplete="off">
+    <button id="pinGo">Unlock</button>
+    <div id="pinErr"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var g=document.getElementById('gate');
+  if(localStorage.getItem('deenLearnUnlocked')==='1'){ g.style.display='none'; return; }
+  document.documentElement.style.overflow='hidden';
+  var pin=document.getElementById('pin'), err=document.getElementById('pinErr');
+  function tryUnlock(){
+    if(pin.value.trim()==='6467'){
+      localStorage.setItem('deenLearnUnlocked','1');
+      g.style.display='none'; document.documentElement.style.overflow='';
+    } else { err.textContent='Wrong code — try again'; pin.value=''; pin.focus(); }
+  }
+  document.getElementById('pinGo').onclick=tryUnlock;
+  pin.addEventListener('keydown',function(e){ if(e.key==='Enter') tryUnlock(); });
+  pin.addEventListener('input',function(){ if(pin.value.length===4) tryUnlock(); });
+  setTimeout(function(){pin.focus();},100);
+})();
+</script>
+<header>
+  <div class="wrap hbar">
+    <div class="logo">D</div>
+    <div>
+      <div class="htitle">Deen Plumbing Academy</div>
+      <div class="hsub">Know your stuff · job-ready</div>
+    </div>
+    <button class="back" id="backBtn">‹ Back</button>
+  </div>
+</header>
+
+<main class="wrap" id="home">
+  <div class="hero">
+    <div class="ring" id="ring"><i id="ringTxt">0%</i></div>
+    <div>
+      <h1 id="heroTitle">Let's get you confident</h1>
+      <p id="heroSub">Work through each module: watch the videos, tick them off, then pass the quiz. Your progress saves automatically on this phone.</p>
+    </div>
+  </div>
+  <div class="tip">📲 <b>Make it an app:</b> tap the Share icon in Safari → <b>Add to Home Screen</b>. It'll open full-screen like a real app and remember your progress.</div>
+  <div class="lab">Your modules</div>
+  <div id="modList"></div>
+  <p class="note">Gas work is for Gas Safe registered engineers only — these gas/boiler lessons are a refresher to keep you sharp (handy for your 5-yearly ACS renewal too). Always work to current regs and manufacturer instructions.</p>
+</main>
+
+<main class="wrap" id="detail"></main>
+
+<footer>Built for Deen · learn it, then smash it 🔧</footer>
+
+<script>
+const DATA = [
+  {
+    id:"fundamentals", icon:"🔧", title:"Plumbing Fundamentals",
+    blurb:"Tools, pipe types and every way to join them — the bedrock of every job.",
+    keys:[
+      "<b>Know your pipe:</b> copper, plastic push-fit (Speedfit/JG), and pushfit/compression all do the same job differently — pick by location, access and whether it's hidden.",
+      "<b>Soldering (capillary):</b> clean the pipe & fitting with wire wool, flux both, heat evenly — molten solder gets <i>drawn into</i> the joint. Solder-ring (Yorkshire) fittings have solder built in; end-feed you add your own.",
+      "<b>Compression:</b> the <b>olive</b> is what seals as you tighten — usually hand-tight plus ~¾ to 1¼ turns with a spanner. Don't over-tighten or you'll crack the olive/leak.",
+      "<b>Push-fit:</b> cut square, deburr, mark insertion depth, use a pipe insert in plastic pipe, push fully home. Demountable and great in tight or wet spots.",
+      "<b>Always isolate first:</b> find the stopcock (often under the kitchen sink) or fit/operate isolation valves so you can work on a dry pipe.",
+      "<b>Measure & deburr:</b> a clean square cut and deburred end is the difference between a dry joint and a callback."
+    ],
+    lessons:[
+      {t:"Plumbing tools every plumber should own", s:"Roger Wakefield", u:"https://www.youtube.com/results?search_query=roger+wakefield+plumbing+tools+for+beginners"},
+      {t:"6 ways to join copper pipe (and when to use each)", s:"YouTube", u:"https://www.youtube.com/watch?v=Q8uBaoqXoGM"},
+      {t:"Soldering copper pipe for beginners", s:"Plumberparts", u:"https://www.youtube.com/results?search_query=plumberparts+how+to+solder+copper+pipe"},
+      {t:"Push-fit & compression fittings demo", s:"DIY tutorial", u:"https://www.youtube.com/watch?v=bti4VDwyJ-g"},
+      {t:"Using push-fit pipe properly", s:"YouTube", u:"https://www.youtube.com/watch?v=ASlNhoHT-08"},
+      {t:"Isolation valves & turning off the water", s:"Plumberparts", u:"https://www.youtube.com/results?search_query=plumberparts+isolation+valve+how+to+fit"}
+    ],
+    quiz:[
+      {q:"On a solder-ring (Yorkshire) fitting, where does the solder come from?", o:["You feed solder wire into the joint","It's built into the fitting and melts when heated","You paint it on as a paste","No solder is needed"], a:1, e:"Solder-ring/Yorkshire fittings have a pre-loaded ring of solder. Heat draws it into the joint. End-feed fittings need you to feed solder in yourself."},
+      {q:"What actually creates the seal on a compression fitting?", o:["PTFE tape on the thread","The olive being compressed onto the pipe","The nut touching the pipe","Jointing compound only"], a:1, e:"Tightening the nut squeezes the olive onto the pipe and into the fitting body, forming the seal. Over-tightening can split the olive and cause a leak."},
+      {q:"Before soldering a copper joint you should…", o:["Wet the pipe with water","Clean both surfaces with wire wool and apply flux","Sand only the inside of the fitting","Heat it red hot first"], a:1, e:"Clean, fluxed surfaces let the solder flow by capillary action. Dirt, grease or no flux = a weak, leaky joint."},
+      {q:"When using push-fit on plastic pipe, the part people most often forget is…", o:["Heating the pipe","Fitting a pipe insert (support sleeve)","Adding solder","Bending the pipe"], a:1, e:"Plastic pipe needs an insert so it can't collapse under the O-ring grip. Skip it and you risk a slow leak or blow-off."},
+      {q:"First thing before working on a live pipe?", o:["Cut it and see what happens","Isolate the water at the stopcock or an isolation valve","Open all the taps","Call the customer"], a:1, e:"Always isolate and drain down. The mains stopcock is commonly under the kitchen sink; isolation valves let you work on one section."}
+    ]
+  },
+  {
+    id:"bathrooms", icon:"🚿", title:"Bathrooms & Installs",
+    blurb:"Taps, toilets, basins, showers and a clean, watertight finish.",
+    keys:[
+      "<b>Taps:</b> use flexible tap connectors with isolation valves so future swaps are easy. Bed the tap on the washer/seal and don't crush the basin.",
+      "<b>Toilets:</b> the <b>fill valve</b> lets water in, the <b>flush valve/siphon</b> lets it out. Most 'running' or 'won't fill' faults are one of these two parts.",
+      "<b>Pan connector:</b> the flexible/offset connector between toilet and soil pipe must be a proper push fit — a common source of hidden leaks and smells.",
+      "<b>Showers:</b> match the valve to the system — mixer needs balanced hot/cold pressures; low-pressure gravity systems may need a pump.",
+      "<b>Silicone like a pro:</b> clean & dry surface, low-modulus sanitary (anti-mould) silicone, masking tape both sides, smooth in one pass, remove tape while wet.",
+      "<b>Always pressure-test</b> and run everything before you pack up — check under the basin and behind the loo."
+    ],
+    lessons:[
+      {t:"How to fit a basin tap (start to finish)", s:"Plumberparts", u:"https://www.youtube.com/results?search_query=plumberparts+how+to+fit+a+basin+tap"},
+      {t:"How a toilet works + fixing common faults", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+a+toilet+cistern+works+fix+fill+valve+flush"},
+      {t:"Replacing a toilet / pan connector", s:"Skill Builder", u:"https://www.youtube.com/results?search_query=skill+builder+how+to+fit+a+toilet+pan+connector"},
+      {t:"Fitting a mixer shower valve", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+fit+a+thermostatic+mixer+shower+valve+uk"},
+      {t:"Perfect silicone sealant every time", s:"Skill Builder", u:"https://www.youtube.com/results?search_query=skill+builder+how+to+apply+silicone+sealant+neat"}
+    ],
+    quiz:[
+      {q:"A toilet that keeps trickling water into the pan is most likely…", o:["A blocked fill valve","A failed flush valve / siphon washer","A cracked pan","Low mains pressure"], a:1, e:"A constant trickle into the pan usually means the flush valve/siphon seal is passing. A faulty fill valve more often causes overfilling or no fill."},
+      {q:"Why fit isolation valves on tap tails?", o:["To boost pressure","So you can service or swap the tap without draining the system","To stop limescale","They're just decorative"], a:1, e:"Isolation valves let you shut off just that tap for future repairs — no draining the whole system."},
+      {q:"For anti-mould bathroom sealing you should use…", o:["High-modulus structural silicone","Low-modulus sanitary (anti-mould) silicone","Decorator's caulk","PVA glue"], a:1, e:"Sanitary low-modulus silicone with fungicide resists mould and movement in wet areas. Caulk is for decorating, not wet seals."},
+      {q:"A mixer shower runs hot then cold when another tap is used. Likely cause?", o:["The tiles are loose","Unbalanced hot/cold pressures or non-thermostatic valve","The showerhead is blocked","Too much silicone"], a:1, e:"Pressure swings show up on non-thermostatic or unbalanced systems. A thermostatic valve holds temperature when other outlets are used."}
+    ]
+  },
+  {
+    id:"heating", icon:"🔥", title:"Heating & Radiators",
+    blurb:"How central heating works, plus bleeding, balancing, flushing and controls.",
+    keys:[
+      "<b>The loop:</b> boiler heats water → pump pushes it round → radiators give off heat → cooler water returns. Each rad has a <b>wheelhead/TRV</b> (on flow) and a <b>lockshield</b> (on return).",
+      "<b>Cold at the top, warm at the bottom = air.</b> Bleed it with a radiator key (system off & cool), then re-check boiler pressure and top up if needed.",
+      "<b>Cold at the bottom, warm at the top = sludge</b> (magnetite). That rad/system needs flushing; fit a <b>magnetic filter</b> to catch it in future.",
+      "<b>Balancing:</b> adjust the lockshield valves so every rad warms evenly — rads nearest the pump usually need throttling down, the furthest opened up.",
+      "<b>System pressure:</b> typically <b>1–1.5 bar cold</b>. Low pressure → top up via the filling loop. Keeps dropping → look for a leak or a failed expansion vessel.",
+      "<b>Controls:</b> understand programmer/thermostat/TRVs and modern smart stats — most 'heating not working' calls are controls, power or pressure, not the boiler itself."
+    ],
+    lessons:[
+      {t:"How a central heating system works", s:"A+R / Tony Morgan", u:"https://www.youtube.com/results?search_query=how+central+heating+system+works+explained+uk"},
+      {t:"How to bleed a radiator correctly", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+bleed+a+radiator+properly+uk"},
+      {t:"Balancing radiators (lockshield valves)", s:"Plumberparts", u:"https://www.youtube.com/results?search_query=how+to+balance+radiators+lockshield+valve"},
+      {t:"Power flushing & magnetic filters explained", s:"YouTube", u:"https://www.youtube.com/results?search_query=power+flush+central+heating+magnetic+filter+explained"},
+      {t:"Topping up boiler pressure with a filling loop", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+top+up+boiler+pressure+filling+loop"}
+    ],
+    quiz:[
+      {q:"A radiator is cold at the TOP but warm at the bottom. What's the fix?", o:["Power flush it","Bleed the trapped air out","Replace the pump","Turn the boiler up"], a:1, e:"Air rises to the top of the rad. Bleed it with a radiator key while the system is off and cool, then re-check pressure."},
+      {q:"A radiator cold at the BOTTOM but warm at the top usually means…", o:["Trapped air","Sludge/magnetite build-up needing a flush","Too much pressure","A broken TRV"], a:1, e:"Heavy iron-oxide sludge settles at the bottom and blocks flow. The system needs flushing, and a magnetic filter helps prevent it returning."},
+      {q:"Typical cold system pressure on a sealed combi system is about…", o:["0 bar","1–1.5 bar","4 bar","10 bar"], a:1, e:"Around 1–1.5 bar cold is normal. If it keeps dropping, suspect a leak or a failed expansion vessel rather than just topping up repeatedly."},
+      {q:"Which valve do you adjust to BALANCE a radiator's flow?", o:["The TRV / wheelhead","The lockshield valve","The bleed valve","The filling loop"], a:1, e:"The lockshield (usually capped) sets the return flow rate so all rads heat evenly. The TRV controls room temperature; the bleed valve releases air."},
+      {q:"Customer says 'heating's not working at all.' Smart first checks?", o:["Immediately quote a new boiler","Check power, controls/programmer, thermostat and system pressure","Power flush straight away","Replace the pump"], a:1, e:"Most no-heat calls are power, controls or low pressure — quick, cheap checks first. Diagnose before you condemn the boiler."}
+    ]
+  },
+  {
+    id:"gas", icon:"🛡️", title:"Gas & Boilers (Refresher)",
+    blurb:"Brush the rust off your ACS knowledge — combustion, tightness, fault-finding.",
+    keys:[
+      "<b>Combi vs system vs heat-only:</b> a combi heats water on demand (no cylinder); system/heat-only feed a hot water cylinder. Know which you're stood in front of before you diagnose.",
+      "<b>Tightness test:</b> the standard let-by + tightness test on the installation — confirm no drop/let-by before you fire anything up. Refresh the permitted pressure drops for your meter type.",
+      "<b>Working pressure & gas rate:</b> check standing and working pressure at the appliance and verify the gas rate against the data badge — under/over-gassing points you to the fault.",
+      "<b>Combustion:</b> use a <b>flue gas analyser</b> — ratio/CO and CO₂ figures tell you if combustion is safe and efficient. Know your pass figures and what high CO/ratio means.",
+      "<b>Ventilation & flue:</b> check flue condition, termination, seals and any required ventilation. A flue fault or blocked condensate is a classic lockout cause.",
+      "<b>Always:</b> carry your Gas Safe ID, work to GSIUR and manufacturer instructions, fit/leave working CO alarms where required, and classify anything unsafe correctly (ID/AR/RIDDOR)."
+    ],
+    lessons:[
+      {t:"Boiler fault finding basics (multimeter)", s:"A+R / Tony Morgan", u:"https://www.youtube.com/results?search_query=A%2BR+central+heating+boiler+fault+finding+multimeter"},
+      {t:"How a combi boiler works (component tour)", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+a+combi+boiler+works+components+explained"},
+      {t:"Tightness testing refresher", s:"YouTube", u:"https://www.youtube.com/results?search_query=gas+tightness+test+let+by+procedure+uk"},
+      {t:"Using a flue gas analyser (combustion)", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+use+flue+gas+analyser+combustion+analysis+boiler"},
+      {t:"Gas rating an appliance", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+gas+rate+a+boiler+u6+meter"}
+    ],
+    quiz:[
+      {q:"A combi boiler differs from a system boiler because it…", o:["Always needs a hot water cylinder","Heats domestic hot water on demand with no cylinder","Can't do central heating","Runs on oil only"], a:1, e:"A combi makes hot water instantly on demand — no stored cylinder. System and heat-only boilers heat a separate cylinder."},
+      {q:"A flue gas analyser is mainly used to check…", o:["Water hardness","Combustion safety and efficiency (CO/CO₂ ratio)","Pipe sizes","Radiator balance"], a:1, e:"It reads CO, CO₂ and the CO/CO₂ ratio so you can confirm combustion is safe and efficient against the manufacturer's figures."},
+      {q:"A tightness test is performed to…", o:["Check radiator flow","Confirm there are no gas leaks / let-by on the installation","Measure water pressure","Test the thermostat"], a:1, e:"It verifies the gas installation is sound (no let-by, no unacceptable pressure drop) before commissioning or after work."},
+      {q:"An appliance is under-gassing. A sensible thing to verify is…", o:["The radiator colour","Standing/working pressure and the gas rate vs the data badge","The silicone seal","The room thermostat brand"], a:1, e:"Check inlet working pressure and the measured gas rate against the badge — restrictions, pressure or meter issues commonly cause under-gassing."},
+      {q:"You find a genuinely unsafe situation on a gas appliance. You should…", o:["Ignore it if the customer's in a rush","Follow the unsafe situations procedure (e.g. ID/AR) and warning/labelling","Just turn it off and leave","Fix it without telling anyone"], a:1, e:"Classify and act per the Gas Industry Unsafe Situations Procedure — warning notices, customer sign-off, and report where required. Safety and your registration depend on it."}
+    ]
+  },
+  {
+    id:"drainage", icon:"🚰", title:"Drainage & Wastes",
+    blurb:"Clearing blockages, traps, waste pipes and outside drains.",
+    keys:[
+      "<b>The trap (U-bend) holds a water seal</b> that stops drain smells entering the room. A dry or siphoned trap = smelly bathroom, not always a blockage.",
+      "<b>Work outwards:</b> if one fitting is blocked it's local; if several back up together the blockage is further down the shared waste or the drain.",
+      "<b>Tools by job:</b> plunger for simple blocks, drain snake/auger for further in, and rods for outside drains — rod <b>with the flow</b> and keep turning clockwise so rods don't unscrew.",
+      "<b>Waste falls matter:</b> waste pipes need the right gradient — too flat won't clear, too steep can siphon traps. Check falls when something keeps blocking.",
+      "<b>Lift the right chamber:</b> at an outside inspection chamber, water level tells you if the blockage is upstream (empty) or downstream (full).",
+      "<b>Prevention sells:</b> strainers, not pouring fat down the sink, and a quick explanation to the customer stops repeat call-outs and builds trust."
+    ],
+    lessons:[
+      {t:"How traps & water seals work", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+plumbing+traps+water+seal+work+explained"},
+      {t:"Clearing a blocked sink (plunger to snake)", s:"Plumberparts", u:"https://www.youtube.com/results?search_query=plumberparts+how+to+unblock+a+sink"},
+      {t:"Rodding an outside drain safely", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+rod+an+outside+drain+blockage+uk"},
+      {t:"Waste pipe falls & gradients", s:"Skill Builder", u:"https://www.youtube.com/results?search_query=skill+builder+waste+pipe+fall+gradient"}
+    ],
+    quiz:[
+      {q:"The main job of a trap (U-bend) is to…", o:["Speed up the flow","Hold a water seal that blocks drain smells","Filter the water","Reduce noise"], a:1, e:"The standing water in the trap seals the room off from drain gases. If it dries out or gets siphoned, you'll smell the drains even with no blockage."},
+      {q:"Several fittings back up at the same time. The blockage is most likely…", o:["In each individual trap","Further down the shared waste or drain","In the cold tank","In the boiler"], a:1, e:"One blocked fitting is local; multiple backing up together points to the common waste pipe or the drain run."},
+      {q:"When rodding an outside drain you should turn the rods…", o:["Anti-clockwise","Clockwise, with the flow","It doesn't matter","Backwards and forwards fast"], a:1, e:"Keep turning clockwise so the rods don't unscrew and get left down the drain, and work with the flow direction."},
+      {q:"A waste pipe that's laid too flat will…", o:["Drain too fast","Not clear properly and keep blocking","Siphon the trap","Freeze"], a:1, e:"Too little fall and waste won't carry away; too much can siphon traps. Correct gradient is key to a reliable waste."}
+    ]
+  },
+  {
+    id:"safety", icon:"⚠️", title:"Safety & Regulations",
+    blurb:"Work safely and legally — the rules that protect you and the customer.",
+    keys:[
+      "<b>Gas Safe:</b> only registered engineers work on gas. Carry your ID card, work in scope of your tickets, and keep your ACS current (renew every 5 years).",
+      "<b>Water Regulations:</b> prevent backflow/contamination, no banned materials, correct pipe sizing and protection — your work must be 'fit and proper' under the regs.",
+      "<b>Electrics:</b> isolate before touching boiler/controls wiring. Notifiable electrical work in certain areas falls under Part P — know your limits and when to call a sparky.",
+      "<b>Building Regs (England):</b> boiler installs touch Part L (efficiency) and Part J (combustion/flues); ventilation and unvented cylinders (G3) have their own rules — notify where required.",
+      "<b>Working safely:</b> watch for asbestos in older properties, use the right PPE, isolate services, and never leave an installation in a dangerous state.",
+      "<b>Protect yourself:</b> public liability insurance, clear records/certificates, and Benchmark/commissioning paperwork completed for every relevant job."
+    ],
+    lessons:[
+      {t:"Gas Safe Register: what registration covers", s:"Gas Safe", u:"https://www.youtube.com/results?search_query=gas+safe+register+explained+engineer"},
+      {t:"Water regulations basics for plumbers", s:"YouTube", u:"https://www.youtube.com/results?search_query=water+regulations+1999+basics+plumbers+backflow"},
+      {t:"Electrical isolation & Part P basics", s:"YouTube", u:"https://www.youtube.com/results?search_query=electrical+isolation+safe+isolation+part+p+basics"},
+      {t:"Asbestos awareness for tradespeople", s:"YouTube", u:"https://www.youtube.com/results?search_query=asbestos+awareness+for+tradespeople+uk"}
+    ],
+    quiz:[
+      {q:"How often does your Gas ACS qualification need renewing?", o:["Every year","Every 5 years","Never","Every 10 years"], a:1, e:"ACS assessments are renewed every 5 years to keep your Gas Safe registration valid — a good reason to stay sharp."},
+      {q:"Water Regulations are mainly there to…", o:["Make pipes look tidy","Prevent contamination/backflow and ensure safe, fit installations","Set prices","Control gas pressure"], a:1, e:"They protect the public water supply from contamination and require correct, safe materials and installation methods."},
+      {q:"Before working on a boiler's wiring you must…", o:["Leave it powered for safety","Safely isolate the electrical supply","Only switch off the gas","Wear gloves and carry on"], a:1, e:"Always safely isolate and prove dead before touching wiring. Notifiable electrical work may fall under Part P."},
+      {q:"In an older property, a key hidden hazard to be alert to is…", o:["Asbestos","Wi-Fi","New plaster","Smart thermostats"], a:1, e:"Asbestos can be present in older homes (flue pipes, boards, textured coatings). If in doubt, stop and get it checked — don't disturb it."}
+    ]
+  },
+  {
+    id:"customer", icon:"🤝", title:"Customer Service & Running Jobs",
+    blurb:"Win the work, price it right, and turn jobs into reviews and referrals.",
+    keys:[
+      "<b>Visit before you quote</b> where you can: check access, existing pipework and the real scope. Accurate quotes = no awkward 'extras' conversations later.",
+      "<b>Itemise it:</b> show labour, materials and what's included. Clear, no-surprise pricing builds trust and wins jobs over a vague 'it'll be about…'.",
+      "<b>Turn up in the window you promised</b> and message if you're running late. Reliability is the single biggest reputation builder in the trade.",
+      "<b>Explain in plain English:</b> tell them what's wrong, what you'd do and why. People pay for confidence and honesty, not jargon.",
+      "<b>No surprise call-out fees, free quotes:</b> say it up front — it removes the #1 hesitation and matches what's on your site.",
+      "<b>Ask for the review:</b> when they're happy, send your Google review link by text/WhatsApp the same day. Reply to every review. Reviews = more local jobs.",
+      "<b>Handle problems well:</b> a calm, sorted complaint often creates a more loyal customer than a job that went perfectly."
+    ],
+    lessons:[
+      {t:"How to quote a job so you win it", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+quote+plumbing+jobs+win+more+work"},
+      {t:"Pricing your work (don't undercharge)", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+price+plumbing+jobs+tradesman"},
+      {t:"Customer service that gets 5-star reviews", s:"YouTube", u:"https://www.youtube.com/results?search_query=tradesman+customer+service+5+star+reviews+tips"},
+      {t:"Getting more Google reviews as a tradesman", s:"YouTube", u:"https://www.youtube.com/results?search_query=how+to+get+more+google+reviews+tradesman+plumber"}
+    ],
+    quiz:[
+      {q:"The best way to avoid awkward 'extra cost' chats mid-job is to…", o:["Quote low to win it","Visit and check scope before quoting, then itemise","Never give a price","Add a surprise fee"], a:1, e:"Seeing the job and breaking down the quote means fewer surprises, fewer disputes, and a customer who trusts your number."},
+      {q:"Which habit builds your reputation the most?", o:["The cheapest price","Turning up when you said and communicating","Fancy van graphics","Working weekends only"], a:1, e:"Reliability and communication beat almost everything else in the trades — it's what gets you recommended."},
+      {q:"Best moment to ask for a Google review is…", o:["A month later by post","The same day, by text/WhatsApp, while they're happy","Never","Only if they complain"], a:1, e:"Strike while they're delighted — a quick same-day message with your review link gets the most reviews."},
+      {q:"A customer has a complaint. The pro move is to…", o:["Ignore it","Stay calm, sort it properly and follow up","Argue","Block their number"], a:1, e:"A well-handled complaint often creates a more loyal, vocal advocate than a job that simply went fine."}
+    ]
+  }
+];
+
+/* ---------- state / storage ---------- */
+const KEY="deenAcademyProgress.v1";
+let store = JSON.parse(localStorage.getItem(KEY) || "{}");
+function save(){ localStorage.setItem(KEY, JSON.stringify(store)); }
+function modState(id){ return store[id] || (store[id]={watched:{},quizBest:null}); }
+function lessonsDone(m){ const s=modState(m.id); return m.lessons.filter((_,i)=>s.watched[i]).length; }
+function modPct(m){
+  const s=modState(m.id);
+  const total=m.lessons.length+1; // lessons + quiz
+  let done=m.lessons.filter((_,i)=>s.watched[i]).length;
+  if(s.quizBest!=null && s.quizBest>=Math.ceil(m.quiz.length*0.8)) done++;
+  return Math.round(done/total*100);
+}
+function overallPct(){
+  let t=0,d=0;
+  DATA.forEach(m=>{ t+=m.lessons.length+1; const s=modState(m.id);
+    d+=m.lessons.filter((_,i)=>s.watched[i]).length;
+    if(s.quizBest!=null && s.quizBest>=Math.ceil(m.quiz.length*0.8)) d++; });
+  return Math.round(d/t*100);
+}
+
+/* ---------- views ---------- */
+const home=document.getElementById('home');
+const detail=document.getElementById('detail');
+const backBtn=document.getElementById('backBtn');
+
+function renderHome(){
+  detail.style.display='none'; home.style.display='block'; backBtn.style.display='none';
+  window.scrollTo(0,0);
+  const p=overallPct();
+  document.getElementById('ring').style.setProperty('--p',p);
+  document.getElementById('ringTxt').textContent=p+'%';
+  if(p===0){ document.getElementById('heroTitle').textContent="Let's get you confident"; }
+  else if(p===100){ document.getElementById('heroTitle').textContent="You're job-ready 💪"; document.getElementById('heroSub').textContent="Every module done. Keep them fresh and get out there with Lee — you know your stuff."; }
+  else { document.getElementById('heroTitle').textContent="You're "+p+"% there"; }
+  const list=document.getElementById('modList'); list.innerHTML='';
+  DATA.forEach(m=>{
+    const pct=modPct(m);
+    const el=document.createElement('button'); el.className='mod';
+    el.innerHTML=`<div class="ic">${m.icon}</div>
+      <div class="mt"><h3>${m.title}</h3>
+      <div class="mbar"><i style="width:${pct}%"></i></div>
+      <span class="pct">${pct===100?'<span class="done-badge">✓ Complete</span>':pct+'% · '+lessonsDone(m)+'/'+m.lessons.length+' videos'}</span>
+      </div><div class="chev">›</div>`;
+    el.onclick=()=>renderModule(m.id);
+    list.appendChild(el);
+  });
+}
+
+function renderModule(id){
+  const m=DATA.find(x=>x.id===id); const s=modState(id);
+  home.style.display='none'; detail.style.display='block'; backBtn.style.display='inline-block';
+  window.scrollTo(0,0);
+  let html=`<div class="panel">
+    <h2>${m.icon} ${m.title}</h2>
+    <p class="ph">${m.blurb}</p>
+    <div class="lab" style="margin:8px 0 8px">Key things to know</div>
+    <ul class="keys">${m.keys.map(k=>`<li>${k}</li>`).join('')}</ul>
+  </div>
+  <div class="panel">
+    <div class="lab" style="margin:0 0 6px">Watch &amp; tick off</div>`;
+  m.lessons.forEach((l,i)=>{
+    const on=!!s.watched[i];
+    html+=`<div class="lesson">
+      <button class="check ${on?'on':''}" data-i="${i}">${on?'✓':''}</button>
+      <div class="linfo"><h4>${l.t}</h4><span>${l.s}</span></div>
+      <a class="watch" href="${l.u}" target="_blank" rel="noopener">▶ Watch</a>
+    </div>`;
+  });
+  html+=`</div>
+  <div class="panel">
+    <div class="lab" style="margin:0 0 10px">Test yourself</div>
+    <p class="ph" style="margin-bottom:12px">${s.quizBest!=null?('Best score so far: <b style="color:#fff">'+s.quizBest+'/'+m.quiz.length+'</b>. ')+(s.quizBest>=Math.ceil(m.quiz.length*0.8)?'Passed ✓':'Aim for '+Math.ceil(m.quiz.length*0.8)+'+ to pass.'):'Pass the quiz ('+Math.ceil(m.quiz.length*0.8)+'/'+m.quiz.length+') to complete the module.'}</p>
+    <button class="quizbtn" id="startQuiz">${s.quizBest!=null?'Retake quiz':'Start quiz'} ›</button>
+  </div>`;
+  detail.innerHTML=html;
+  detail.querySelectorAll('.check').forEach(b=>{
+    b.onclick=()=>{ const i=b.dataset.i; s.watched[i]=!s.watched[i]; save();
+      b.classList.toggle('on'); b.textContent=s.watched[i]?'✓':''; };
+  });
+  document.getElementById('startQuiz').onclick=()=>renderQuiz(id);
+}
+
+function renderQuiz(id){
+  const m=DATA.find(x=>x.id===id); window.scrollTo(0,0);
+  let answered=0, score=0; const picked={};
+  let html=`<div class="panel"><h2>${m.icon} ${m.title} — Quiz</h2>
+    <p class="ph">Tap an answer. You'll see straight away if it's right, with a quick explanation.</p><div id="qbox"></div></div>`;
+  detail.innerHTML=html;
+  const box=document.getElementById('qbox');
+  m.quiz.forEach((item,qi)=>{
+    const q=document.createElement('div'); q.className='q';
+    q.innerHTML=`<div class="qn">QUESTION ${qi+1} / ${m.quiz.length}</div><h4>${item.q}</h4>`;
+    item.o.forEach((opt,oi)=>{
+      const b=document.createElement('button'); b.className='opt'; b.textContent=opt;
+      b.onclick=()=>{
+        if(picked[qi]!=null) return; picked[qi]=oi; answered++;
+        const correct=oi===item.a; if(correct) score++;
+        q.querySelectorAll('.opt').forEach((bb,bi)=>{ bb.disabled=true;
+          if(bi===item.a) bb.classList.add('correct');
+          if(bi===oi && !correct) bb.classList.add('wrong'); });
+        q.querySelector('.explain').classList.add('show');
+        if(answered===m.quiz.length) showResult();
+      };
+      q.appendChild(b);
+    });
+    const ex=document.createElement('div'); ex.className='explain'; ex.innerHTML='<b>'+(/* leave */ '')+'</b>'+item.e; q.appendChild(ex);
+    box.appendChild(q);
+  });
+  function showResult(){
+    const s=modState(id); if(s.quizBest==null||score>s.quizBest){ s.quizBest=score; save(); }
+    const pass=score>=Math.ceil(m.quiz.length*0.8);
+    const res=document.createElement('div'); res.className='panel';
+    res.innerHTML=`<div class="result"><div class="big">${score}/${m.quiz.length}</div>
+      <p>${pass?'Nice one — that\'s a pass. Knowledge locked in. ✅':'Close — give the videos another watch and retake it. You\'ve got this.'}</p></div>
+      <button class="btn2" onclick="renderQuiz('${id}')">Retake quiz</button>
+      <button class="btn2" onclick="renderModule('${id}')" style="margin-top:8px">Back to module</button>`;
+    detail.appendChild(res);
+    res.scrollIntoView({behavior:'smooth'});
+  }
+}
+
+backBtn.onclick=renderHome;
+renderHome();
+</script>
+</body>
+</html>
